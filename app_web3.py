@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-pip install -U click==8
+#pip install -U click==8
 ## NA TELA TEM QUE APENAS EXIBIR:
 ## TON/HR
 ## CAIXOTES/HORA
