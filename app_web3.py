@@ -1,17 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-#pip install -U click==8
-## NA TELA TEM QUE APENAS EXIBIR:
-## TON/HR
-## CAIXOTES/HORA
-## QNTD DE EMBALADEIRAS
-## QNTD NO TALO IDEAL
-## O AJUSTE TEM QUE SER DE FORMA AUTOMATICA CONFORME OS CAIXOSTES E FRUTOS VARIAM
-## POSSO COLOCAR COMO INPUT NO FORMS A QUANTIDADE DE PESSOAS DISPONIVEIS
-## A PESSOA DIGITA E ELE N PRECISA FICAR EQUILBRANDO
-## O MODELO JA BUSCA A MELHOR COMBINAÇÂO COM BASE NO QUE TA DISPONIVEL
-## E APENAS EXIBE NA TELA QUAL SÃO AS QUANTIDADES QUE A PESSOA TEM QUE ATRIBUIR
+
 
 st.set_page_config(layout="wide")
 dataset = pd.read_excel('Planilha Denilton.xlsx')
@@ -180,7 +170,7 @@ with coluna1:
     
 
 
-pagina_selecionada = st.sidebar.selectbox('Escolha uma opção:', ['Balanceamento e produtividade','Linhas de embalagem'])
+pagina_selecionada = st.sidebar.selectbox('Escolha uma opção:', ['Balanceamento e produtividade','Linhas de embalagem','Distribuição embaladeiras'])
 
 
 if pagina_selecionada == 'Balanceamento e produtividade':
@@ -1283,7 +1273,7 @@ elif pagina_selecionada == 'Linhas de embalagem':
         st.plotly_chart(fig)
 
         #Layout_linha_7
-        Layout_linha_8 = Layout_linha_7[['Linha','Calibre','Qualidade','Calibre2','Qualidade2','Frutos','Frutos2','Caixas','Caixas2']]
+        Layout_linha_8 = Layout_linha_7[['Linha','Calibre','Qualidade','Calibre2','Qualidade2','Frutos','Frutos2','Caixas','Caixas2','Embaladeiras','Setores']]
         Layout_linha_8['Calibre'] = Layout_linha_8['Calibre'].astype(str)
         Layout_linha_8['Calibre'] = Layout_linha_8['Calibre'].replace('1.0',' ')
         Layout_linha_8  = Layout_linha_8.fillna(0)
@@ -1295,15 +1285,565 @@ elif pagina_selecionada == 'Linhas de embalagem':
         #Layout_linha_9 = Layout_linha_8.astype(float)
 
     with col1:
+        Layout_linha_8.to_excel('Layout_final.xlsx')
         Layout_linha_8
+        #Layout_linha_7
         #Layout_linha_5
-        
-        ##
 
-        #st.write('A quantidade de embaladeiras por setor é de:', df_setores)
 
+
+elif pagina_selecionada == 'Distribuição embaladeiras':
+
+    import plotly.express as px
+    Layout_linha_9 = pd.read_excel('Layout_final.xlsx')
+
+    Layout_linha_9 = Layout_linha_9.drop(columns = ['Unnamed: 0'])
+    Layout_linha_9['Setores'] = Layout_linha_9['Setores'].astype(str)
+
+    Layout_linha_9['Embaladeiras'] = Layout_linha_9['Embaladeiras'].replace(' ','0')
+    Layout_linha_9['Embaladeiras'] = Layout_linha_9['Embaladeiras'].astype(float)
+
+##################################### DATASET EMBALADEIRAS #######################################################################
+
+    padrao_embaldeiras = pd.read_excel('padrao_embaladeiras_TUDO_cenarios.xlsx')
+
+    #filtro_melhor = padrao_embaldeiras['Cenario'] == 'Melhor'
+    #padrao_embaldeiras = padrao_embaldeiras[filtro_melhor]
+
+    def correcao_variedade(padrao_embaldeiras):
+        if padrao_embaldeiras['VARIEDADE'] == 'Tommy ':
+            return 'Tommy Atkins'
+        elif padrao_embaldeiras['VARIEDADE'] == 'Keitt ':
+            return 'Keitt'
+        else:
+            return padrao_embaldeiras['VARIEDADE']
+    padrao_embaldeiras['VARIEDADE'] = padrao_embaldeiras.apply(correcao_variedade, axis = 1)
+
+    #Layout_linha_9
+    #st.title('Em construção')
+
+#############################################  COLUNAS  #########################################################################
+    col1, col2 = st.columns(2)
     
-    #fig = st.columns(4)
+#################################################   PALMER #################################################
+    with col1.form(key='planilha'):
+        
+        st.subheader('Escolha o calibre para visualizar a recomendação:')
+        ## Criando variaveis
+        ################ INPUTS ################
+        calibre_input = st.number_input(label = '', format = "%d", step = 1)
+        #variedade2 = variedade
+        button_submit = st.form_submit_button('Visualizar Recomendação')
+
+        #Layout_linha_9['Calibre'] = Layout_linha_9['Calibre'].replace(' ','0')
+        #Layout_linha_9['Calibre'] = Layout_linha_9['Calibre'].astype(float)
+
+        #linhas = Layout_linha_9.merge(calibre_input, left_on = 'Calibre')
+        #linhas
+
+    with col1:
+        if button_submit:
+            st.write('Recomenda-se designar estas embaladeiras para as linhas de calibre',calibre_input,'da variedade',variedade,':')
+            st.markdown('*Ordem de produtividade:*')
+            #st.markdown('Recomenda-se designar estas embaladeiras para as linhas de calibre 10:')
+
+            if calibre_input == 5 and variedade == 'Palmer':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Palmer'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 5
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 6 and variedade == 'Palmer':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Palmer'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 6
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+            elif calibre_input == 7 and variedade == 'Palmer':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Palmer'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 7
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 8 and variedade == 'Palmer':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Palmer'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 8
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+            elif calibre_input == 9 and variedade == 'Palmer':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Palmer'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 9
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 10 and variedade == 'Palmer':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Palmer'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 10
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 12 and variedade == 'Palmer':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Palmer'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 12
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 14 and variedade == 'Palmer':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Palmer'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 14
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+            elif calibre_input == 5 and variedade == 'Kent':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Kent'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 5
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                a
+
+            elif calibre_input == 6 and variedade == 'Kent':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Kent'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 6
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                a
+            elif calibre_input == 7 and variedade == 'Kent':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Kent'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 7
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 8 and variedade == 'Kent':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Kent'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 8
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+            elif calibre_input == 9 and variedade == 'Kent':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Kent'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 9
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 10 and variedade == 'Kent':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Kent'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 10
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 12 and variedade == 'Kent':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Kent'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 12
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 14 and variedade == 'Kent':
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Kent'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 14
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 5 and variedade == 'Tommy Atkins':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Tommy Atkins'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 5
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 6 and variedade == 'Tommy Atkins':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Tommy Atkins'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 6
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+            elif calibre_input == 7 and variedade == 'Tommy Atkins':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Tommy Atkins'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 7
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 8 and variedade == 'Tommy Atkins':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Tommy Atkins'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 8
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+            elif calibre_input == 9 and variedade == 'Tommy Atkins':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Tommy Atkins'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 9
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 10 and variedade == 'Tommy Atkins':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Tommy Atkins'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 10
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 12 and variedade == 'Tommy Atkins':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Tommy Atkins'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 12
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 14 and variedade == 'Tommy Atkins':
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Tommy Atkins'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 14
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 5 and variedade == 'Keitt':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Keitt'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 5
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 6 and variedade == 'Keitt':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Keitt'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 6
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+            elif calibre_input == 7 and variedade == 'Keitt':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Keitt'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 7
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 8 and variedade == 'Keitt':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Keitt'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 8
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                #a['Calibre'] = calibre_input
+                b
+            elif calibre_input == 9 and variedade == 'Keitt':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Keitt'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 9
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 10 and variedade == 'Keitt':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Keitt'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 10
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 12 and variedade == 'Keitt':
+
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Keitt'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 12
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            elif calibre_input == 14 and variedade == 'Keitt':
+                filtro_variedade = padrao_embaldeiras['VARIEDADE'] == 'Keitt'
+                padrao_embaldeiras_palmer = padrao_embaldeiras[filtro_variedade]
+
+                filtro_calibre = padrao_embaldeiras['CALIBRE'] == 14
+                padrao_embaldeiras_palmer = padrao_embaldeiras_palmer[filtro_calibre]
+
+
+                    #padrao_embaldeiras_palmer.groupby(['CALIBRE','PESSOA'])['mean']
+                a = padrao_embaldeiras_palmer.groupby(['PESSOA'])['mean'].max().sort_values(ascending=False).head(20)
+                a = a.reset_index()
+                b = a['PESSOA'].astype(str)
+                b
+
+            else:
+                st.write('Atenção nos valores de entrada')
+        
+    with col2:
+            #Layout_linha_9
+        if button_submit:
+            Layout_linha_9 = Layout_linha_9.fillna(' ')
+            Layout_linha_9['Qualidade'] = Layout_linha_9['Qualidade'].astype(str)
+            Layout_linha_9['Qualidade2'] = Layout_linha_9['Qualidade2'].astype(str)
+            #Layout_linha_9 = Layout_linha_9.fillna(' ')
+            Layout_linha_9['Calibre - Qualidade'] = Layout_linha_9['Calibre'] + '-' +Layout_linha_9['Qualidade'] + ' '+ '/' + ' ' + Layout_linha_9['Calibre2'] + '-' + Layout_linha_9['Qualidade2']
+            
+            fig4 = px.bar(Layout_linha_9, x = 'Linha', y = 'Embaladeiras', color = 'Calibre - Qualidade', title = 'Distribuição de embaladeiras nas linhas de embalagem:', text = 'Embaladeiras',
+            category_orders={"Calibre":['5.0','6.0','7.0','8.0','9.0','10.0','12.0','14.0']}, hover_name = 'Linha')
+            fig4.update_layout(height = 450, width = 750, uniformtext_minsize=8, uniformtext_mode='show')
+            fig4.update_traces(textfont_size=14, textangle=0, textposition="outside", cliponaxis=False)
+            col2.plotly_chart(fig4)
+
+            #st.title('nada')
+            #Layout_linha_9
+            #a
+
+
+
+    #Layout_linha_8
+
+
+
     
     
 
