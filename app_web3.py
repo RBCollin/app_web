@@ -170,10 +170,10 @@ with coluna1:
     
 
 
-pagina_selecionada = st.sidebar.selectbox('Escolha uma opção:', ['Balanceamento e produtividade','Linhas de embalagem','Distribuição embaladeiras'])
+pagina_selecionada = st.sidebar.selectbox('Escolha uma opção:', ['1 - Balanceamento e produtividade','2 - Linhas de embalagem','3 - Distribuição embaladeiras'])
 
 
-if pagina_selecionada == 'Balanceamento e produtividade':
+if pagina_selecionada == '1 - Balanceamento e produtividade':
     ## Tela de inputs
     #st.title('Talo - Embalagem')
     #st.title('Balanceamento da linha de embalagem')
@@ -277,7 +277,7 @@ if pagina_selecionada == 'Balanceamento e produtividade':
 
 ################################### OBJETIVO -- FALAR QUANTAS PESSOAS PRECISAM EM CADA LINHA ############################
 
-elif pagina_selecionada == 'Linhas de embalagem':
+elif pagina_selecionada == '2 - Linhas de embalagem':
 
     #col1.title('Linhas de Embalagem')
         #caixotes
@@ -1292,7 +1292,7 @@ elif pagina_selecionada == 'Linhas de embalagem':
 
 
 
-elif pagina_selecionada == 'Distribuição embaladeiras':
+elif pagina_selecionada == '3 - Distribuição embaladeiras':
 
     import plotly.express as px
     Layout_linha_9 = pd.read_excel('Layout_final.xlsx')
