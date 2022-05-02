@@ -170,7 +170,7 @@ with coluna1:
     
 
 
-pagina_selecionada = st.sidebar.selectbox('Escolha as informações na ordem:', ['1 - Balanceamento e produtividade','2 - Linhas de embalagem','3 - Distribuição embaladeiras'])
+pagina_selecionada = st.sidebar.selectbox('', ['1 - Balanceamento e produtividade','2 - Linhas de embalagem','3 - Distribuição embaladeiras'])
 
 
 if pagina_selecionada == '1 - Balanceamento e produtividade':
