@@ -166,7 +166,7 @@ with coluna1:
 
     st.sidebar.image(img2, use_column_width=True)
     st.sidebar.title('Menu')
-    st.sidebar.markdown('Escolha a informação para visualizar')
+    st.sidebar.markdown('Escolha a informação para visualizar:')
     
 
 
