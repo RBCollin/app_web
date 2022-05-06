@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 
 
+
 st.set_page_config(layout="wide")
 dataset = pd.read_excel('Planilha Denilton.xlsx')
 #dataset
@@ -1434,6 +1435,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     a['Calibre'] = a['Calibre'].astype(str)
                     a['ID_PESSOA'] = a['ID_PESSOA'].astype(str)
                     aa = px.bar(a,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Palmer - Calibre 5',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    aa.update_yaxes(range = [a['Caixas/Hora'].min()-10,a['Caixas/Hora'].max()])
                     aa.update_layout(height = 350, width = 350)
                     
 
@@ -1466,6 +1468,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     b['Calibre'] = b['Calibre'].astype(str)
                     b['ID_PESSOA'] = b['ID_PESSOA'].astype(str)
                     bb = px.bar(b,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Palmer - Calibre 6',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    bb.update_yaxes(range = [b['Caixas/Hora'].min()-10,b['Caixas/Hora'].max()])
                     bb.update_layout(height = 350, width = 350)
 
                 elif elem == 7.0:
@@ -1500,6 +1503,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     c['Calibre'] = c['Calibre'].astype(str)
                     c['ID_PESSOA'] = c['ID_PESSOA'].astype(str)
                     cc = px.bar(c,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Palmer - Calibre 7',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    cc.update_yaxes(range = [c['Caixas/Hora'].min()-10,c['Caixas/Hora'].max()])
                     cc.update_layout(height = 350, width = 350)
 
                 elif elem == 8.0:
@@ -1536,6 +1540,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     d['Calibre'] = d['Calibre'].astype(str)
                     d['ID_PESSOA'] = d['ID_PESSOA'].astype(str)
                     dd = px.bar(d,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Palmer - Calibre 8',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    dd.update_yaxes(range = [d['Caixas/Hora'].min()-10,d['Caixas/Hora'].max()])
                     dd.update_layout(height = 350, width = 350)
                     
 
@@ -1579,6 +1584,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     e['Calibre'] = e['Calibre'].astype(str)
                     #e['ID_PESSOA'] = e['ID_PESSOA'].astype(str)
                     ee = px.bar(e,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Palmer - Calibre 9',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    ee.update_yaxes(range = [e['Caixas/Hora'].min()-10,e['Caixas/Hora'].max()])
                     ee.update_layout(height = 350, width = 350)
 
                 elif elem == 10.0:
@@ -1622,6 +1628,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     f['Calibre'] = f['Calibre'].astype(str)
                     f['ID_PESSOA'] = f['ID_PESSOA'].astype(str)
                     ff = px.bar(f,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Palmer - Calibre 10', hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    ff.update_yaxes(range = [f['Caixas/Hora'].min()-10,f['Caixas/Hora'].max()])
                     ff.update_layout(height = 350, width = 350)
                     
                     
@@ -1666,6 +1673,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     g['Calibre'] = g['Calibre'].astype(str)
                     g['ID_PESSOA'] = g['ID_PESSOA'].astype(str)
                     gg = px.bar(g,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Palmer - Calibre 12',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    gg.update_yaxes(range = [g['Caixas/Hora'].min()-10,g['Caixas/Hora'].max()])
                     gg.update_layout(height = 350, width = 350)
                 
                 elif elem == 14.0:
@@ -1690,6 +1698,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     h['Calibre'] = h['Calibre'].astype(str)
                     h['ID_PESSOA'] = h['ID_PESSOA'].astype(str)
                     hh = px.bar(h,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Palmer - Calibre 14',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    hh.update_yaxes(range = [h['Caixas/Hora'].min()-10,h['Caixas/Hora'].max()])
                     hh.update_layout(height = 350, width = 350)
 
 
@@ -1734,6 +1743,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     a['Calibre'] = a['Calibre'].astype(str)
                     a['ID_PESSOA'] = a['ID_PESSOA'].astype(str)
                     aa = px.bar(a,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Kent - Calibre 5',hover_name = 'PESSOA', color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    aa.update_yaxes(range = [a['Caixas/Hora'].min()-10,a['Caixas/Hora'].max()])
                     aa.update_layout(height = 350, width = 350)
 
                 elif elem == 6.0:
@@ -1764,6 +1774,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     b['Calibre'] = b['Calibre'].astype(str)
                     b['ID_PESSOA'] = b['ID_PESSOA'].astype(str)
                     bb = px.bar(b,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Kent - Calibre 6',hover_name = 'PESSOA', color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    bb.update_yaxes(range = [b['Caixas/Hora'].min()-10,b['Caixas/Hora'].max()])
                     bb.update_layout(height = 350, width = 350)
 
                 elif elem == 7.0:
@@ -1795,6 +1806,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     c['Calibre'] = c['Calibre'].astype(str)
                     c['ID_PESSOA'] = c['ID_PESSOA'].astype(str)
                     cc = px.bar(c,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Kent - Calibre 7', hover_name = 'PESSOA', color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    cc.update_yaxes(range = [c['Caixas/Hora'].min()-10,c['Caixas/Hora'].max()])
                     cc.update_layout(height = 350, width = 350)
                 
                 elif elem == 8.0:
@@ -1827,6 +1839,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     d['Calibre'] = d['Calibre'].astype(str)
                     d['ID_PESSOA'] = d['ID_PESSOA'].astype(str)
                     dd = px.bar(d,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Kent - Calibre 8', hover_name = 'PESSOA', color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    dd.update_yaxes(range = [d['Caixas/Hora'].min()-10,d['Caixas/Hora'].max()])
                     dd.update_layout(height = 350, width = 350)
                 
                 elif elem == 9.0:
@@ -1863,6 +1876,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     e['Calibre'] = e['Calibre'].astype(str)
                     e['ID_PESSOA'] = e['ID_PESSOA'].astype(str)
                     ee = px.bar(e,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Kent - Calibre 9' ,hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    ee.update_yaxes(range = [e['Caixas/Hora'].min()-10,e['Caixas/Hora'].max()])
                     ee.update_layout(height = 350, width = 350)
                 
                 elif elem == 10.0:
@@ -1901,6 +1915,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     f['Calibre'] = f['Calibre'].astype(str)
                     f['ID_PESSOA'] = f['ID_PESSOA'].astype(str)
                     ff = px.bar(f,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Kent - Calibre 10' ,hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    ff.update_yaxes(range = [f['Caixas/Hora'].min()-10,f['Caixas/Hora'].max()])
                     ff.update_layout(height = 350, width = 350)
                 
                 elif elem == 12.0:
@@ -1939,6 +1954,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     g['Calibre'] = g['Calibre'].astype(str)
                     g['ID_PESSOA'] = g['ID_PESSOA'].astype(str)
                     gg = px.bar(g,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Kent - Calibre 12',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    gg.update_yaxes(range = [g['Caixas/Hora'].min()-10,g['Caixas/Hora'].max()])
                     gg.update_layout(height = 350, width = 350)
                 
                 elif elem == 14.0:
@@ -1957,6 +1973,8 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     h['Calibre'] = h['Calibre'].astype(str)
                     h['ID_PESSOA'] = h['ID_PESSOA'].astype(str)
                     hh = px.bar(h,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Kent - Calibre 14',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+
+                    hh.update_yaxes(range = [h['Caixas/Hora'].min()-10,h['Caixas/Hora'].max()])
                     hh.update_layout(height = 350, width = 350)
             elif elem in Layout_linha_9['Calibre'] and variedade == 'Keitt':
                 resultDict[elem] = True
@@ -1997,6 +2015,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     a['Calibre'] = a['Calibre'].astype(str)
                     a['ID_PESSOA'] = a['ID_PESSOA'].astype(str)
                     aa = px.bar(a,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Keitt - Calibre 5',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    aa.update_yaxes(range = [a['Caixas/Hora'].min()-10,a['Caixas/Hora'].max()])
                     aa.update_layout(height = 350, width = 350)
 
                 elif elem == 6.0:
@@ -2026,6 +2045,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     b['Calibre'] = b['Calibre'].astype(str)
                     b['ID_PESSOA'] = b['ID_PESSOA'].astype(str)
                     bb = px.bar(b,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Keitt - Calibre 6',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    bb.update_yaxes(range = [b['Caixas/Hora'].min()-10,b['Caixas/Hora'].max()])
                     bb.update_layout(height = 350, width = 350)
 
                 elif elem == 7.0:
@@ -2057,6 +2077,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     c['Calibre'] = c['Calibre'].astype(str)
                     c['ID_PESSOA'] = c['ID_PESSOA'].astype(str)
                     cc = px.bar(c,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Keitt - Calibre 7',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    cc.update_yaxes(range = [c['Caixas/Hora'].min()-10,c['Caixas/Hora'].max()])
                     cc.update_layout(height = 350, width = 350)
 
                 elif elem == 8.0:
@@ -2092,7 +2113,8 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     d['Calibre'] = 8.0
                     d['Calibre'] = d['Calibre'].astype(str)
                     d['ID_PESSOA'] = d['ID_PESSOA'].astype(str)
-                    dd = px.bar(d,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Keitt - Calibre 8',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    dd = px.bar(d,y = 'Caixas/Hora', color = 'ID_PESSOA',title = 'Keitt - Calibre 8',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    dd.update_yaxes(range = [d['Caixas/Hora'].min()-10,d['Caixas/Hora'].max()])
                     dd.update_layout(height = 350, width = 350)
 
                 elif elem == 9.0:
@@ -2129,6 +2151,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     e['Calibre'] = e['Calibre'].astype(str)
                     e['ID_PESSOA'] = e['ID_PESSOA'].astype(str)
                     ee = px.bar(e,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Keitt - Calibre 9' ,hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    ee.update_yaxes(range = [e['Caixas/Hora'].min()-10,e['Caixas/Hora'].max()])
                     ee.update_layout(height = 350, width = 350)
                 elif elem == 10.0:
 
@@ -2166,6 +2189,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     f['Calibre'] = f['Calibre'].astype(str)
                     f['ID_PESSOA'] = f['ID_PESSOA'].astype(str)
                     ff = px.bar(f,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Keitt - Calibre 10',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    ff.update_yaxes(range = [f['Caixas/Hora'].min()-10,f['Caixas/Hora'].max()])
                     ff.update_layout(height = 350, width = 350)
                 elif elem == 12.0:
 
@@ -2205,6 +2229,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     g['Calibre'] = g['Calibre'].astype(str)
                     g['ID_PESSOA'] = g['ID_PESSOA'].astype(str)
                     gg = px.bar(g,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Keitt - Calibre 12' ,hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    gg.update_yaxes(range = [g['Caixas/Hora'].min()-10,g['Caixas/Hora'].max()])
                     gg.update_layout(height = 350, width = 350)
                 elif elem == 14.0:
                     kl = ccc.loc[ccc.Calibre== elem,'Embaladeiras_1'].values[0]
@@ -2226,6 +2251,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     h['Calibre'] = h['Calibre'].astype(str)
                     h['ID_PESSOA'] = h['ID_PESSOA'].astype(str)
                     hh = px.bar(h,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Keitt - Calibre 14',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl )
+                    hh.update_yaxes(range = [h['Caixas/Hora'].min()-10,h['Caixas/Hora'].max()])
                     hh.update_layout(height = 350, width = 350)
 
             elif elem in Layout_linha_9['Calibre'] and variedade == 'Tommy Atkins':
@@ -2267,6 +2293,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     a['Calibre'] = a['Calibre'].astype(str)
                     a['ID_PESSOA'] = a['ID_PESSOA'].astype(str)
                     aa = px.bar(a,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Tommy Atkins - Calibre 5',hover_name = 'PESSOA', color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    aa.update_yaxes(range = [a['Caixas/Hora'].min()-10,a['Caixas/Hora'].max()])
                     aa.update_layout(height = 350, width = 350)
 
                 elif elem == 6.0:
@@ -2294,6 +2321,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     b['Calibre'] = b['Calibre'].astype(str)
                     b['ID_PESSOA'] = b['ID_PESSOA'].astype(str)
                     bb = px.bar(b,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Tommy Atkins - Calibre 6',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    bb.update_yaxes(range = [b['Caixas/Hora'].min()-10,b['Caixas/Hora'].max()])
                     bb.update_layout(height = 350, width = 350)
 
                 elif elem == 7.0:
@@ -2327,6 +2355,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     c['Calibre'] = c['Calibre'].astype(str)
                     c['ID_PESSOA'] = c['ID_PESSOA'].astype(str)
                     cc = px.bar(c,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Tommy Atkins - Calibre 7', hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    cc.update_yaxes(range = [c['Caixas/Hora'].min()-10,c['Caixas/Hora'].max()])
                     cc.update_layout(height = 350, width = 350)
 
                 elif elem == 8.0:
@@ -2359,6 +2388,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     d['Calibre'] = d['Calibre'].astype(str)
                     d['ID_PESSOA'] = d['ID_PESSOA'].astype(str)
                     dd = px.bar(d,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Tommy Atkins - Calibre 8',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    dd.update_yaxes(range = [d['Caixas/Hora'].min()-10,d['Caixas/Hora'].max()])
                     dd.update_layout(height = 350, width = 350)
 
                 elif elem == 9.0:
@@ -2394,6 +2424,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     e['Calibre'] = e['Calibre'].astype(str)
                     e['ID_PESSOA'] = e['ID_PESSOA'].astype(str)
                     ee = px.bar(e,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Tommy Atkins - Calibre 9',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    ee.update_yaxes(range = [e['Caixas/Hora'].min()-10,e['Caixas/Hora'].max()])
                     ee.update_layout(height = 350, width = 350)
 
                 elif elem == 10.0:
@@ -2430,6 +2461,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     f['Calibre'] = f['Calibre'].astype(str)
                     f['ID_PESSOA'] = f['ID_PESSOA'].astype(str)
                     ff = px.bar(f,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Tommy Atkins - Calibre 10',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    ff.update_yaxes(range = [f['Caixas/Hora'].min()-10,f['Caixas/Hora'].max()])
                     ff.update_layout(height = 350, width = 350)
 
                 elif elem == 12.0:
@@ -2469,6 +2501,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     g['Calibre'] = g['Calibre'].astype(str)
                     g['ID_PESSOA'] = g['ID_PESSOA'].astype(str)
                     gg = px.bar(g,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Tommy Atkins  - Calibre 12',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    gg.update_yaxes(range = [g['Caixas/Hora'].min()-10,g['Caixas/Hora'].max()])
                     gg.update_layout(height = 350, width = 350)
 
                 elif elem == 14.0:
@@ -2508,6 +2541,7 @@ elif pagina_selecionada == '3 - Distribuição embaladeiras':
                     h['Calibre'] = h['Calibre'].astype(str)
                     h['ID_PESSOA'] = h['ID_PESSOA'].astype(str)
                     hh = px.bar(h,y = 'Caixas/Hora', color = 'ID_PESSOA', title = 'Tommy Atkins - Calibre 14',hover_name = 'PESSOA',color_discrete_sequence= px.colors.sequential.Aggrnyl)
+                    hh.update_yaxes(range = [h['Caixas/Hora'].min()-10,h['Caixas/Hora'].max()])
                     hh.update_layout(height = 350, width = 350)
 
 
