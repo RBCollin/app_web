@@ -33,8 +33,7 @@ quality = dataset['Qualidade'].value_counts() / dataset['Qualidade'].count()
 quality = pd.DataFrame(quality)
 quality = quality.reset_index()
 quality.columns = ['Qualidade','Percent']
-controle = '534'
-controle
+
 
 primeira_percent = quality[quality.Qualidade==1].Percent.item()
 segunda_percent = quality[quality.Qualidade==2].Percent.item()
