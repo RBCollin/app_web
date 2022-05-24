@@ -1,7 +1,7 @@
-numpy
-click==8.0.4
+scipy
+click
+numpy==1.22.2
 pandas==1.3.4
 Pillow==9.1.0
 plotly==5.4.0
 streamlit==1.7.0
-openpyxl
